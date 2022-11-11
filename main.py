@@ -181,3 +181,4 @@ print (sol)
 
 #OUALE
 #ETOLE
+#HANTA
