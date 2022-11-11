@@ -1,15 +1,15 @@
 import random
 import math
-import copy
 
 file = open("words_list.txt", 'r')
 
 words_list = []
 for line in file:
-    line1 = line
-    len1 = len(line1)
-    line1 = line1[:len1-1]
-    words_list.append(line1)
+    len1 = len(line)
+    line = line[:len1-1]
+    words_list.append(line)
+words_list.pop()
+words_list.append("ZVONI")
 
 dim = 11454
 
@@ -59,42 +59,48 @@ def pattern(pickedWord, guessWord):
 def filter_words_pattern(guessWord, givenPattern):
     aux = []
     aux.clear()
-    for word1 in words_list:
-        #pattern1 = pattern(guessWord, word)
-        word = (word1+'.')[:-1]
+    for word in words_list:
+        word1 = (word+'.')[:-1]
+        guessWord1 = (guessWord+'.')[:-1]
         ok = 0
-        if word == "SPRAY":
-            print("a")
         for i in range(5):
             if givenPattern[i] == "2":
-                if word[i] != guessWord[i]:
+                if word1[i] != guessWord1[i]:
                     ok = 1
+                    break
                 #words_list[index], words_list[len(words_list) - 1] = words_list[len(words_list) - 1], words_list[index]
                 #words_list[len(words_list) - 1], words_list[index] = words_list[index], words_list[len(words_list) - 1]
                 #words_list.pop()
-                word = word[:i] + "#" + word[i+1:]
-
+                word1 = word1[:i] + "#" + word1[i+1:]
+                guessWord1 = guessWord1[:i] + "@" + guessWord1[i + 1:]
+        if ok == 1:
+            continue
+        for i in range(5):
             if givenPattern[i] == "1":
-                if word.find(guessWord[i]) == -1:
+                if word1.find(guessWord1[i]) == -1:
                     ok = 1
+                    break
                 else:
-                    ind = word.find(guessWord[i])
-                    word = word[:ind] + "#" + word[ind + 1:]
+                    ind = word1.find(guessWord1[i])
+                    word1 = word1[:ind] + "#" + word1[ind + 1:]
                 #words_list[index], words_list[len(words_list) - 1] = words_list[len(words_list) - 1], words_list[index]
                 #words_list[len(words_list) - 1], words_list[index] = words_list[index], words_list[len(words_list) - 1]
                 #words_list.pop()
 
-            if givenPattern[i] == "0" and word.find(guessWord[i]) != -1:
-                ok = 1
-                ind = word.find(guessWord[i])
-                word = word[:ind] + "#" + word[ind + 1:]
+            if givenPattern[i] == "0":
+                if word1.find(guessWord1[i]) != -1:
+                    ok = 1
+                    break
+                #else:
+                    #ind = word1.find(guessWord1[i])
+                    #word1 = word1[:ind] + "#" + word1[ind + 1:]
                 #words_list[index], words_list[len(words_list) - 1] = words_list[len(words_list) - 1], words_list[index]
                 #words_list.pop()
 
         if ok == 0:
             #words_list[index], words_list[len(words_list) - 1] = words_list[len(words_list) - 1], words_list[index]
             #words_list.pop()
-            aux.append(word1)
+            aux.append(word)
     words_list.clear()
     for i in range(len(aux)):
         words_list.append(aux[i])
@@ -102,8 +108,11 @@ def filter_words_pattern(guessWord, givenPattern):
 def entropy(guessWord):
     events = {possible_pattern: 0 for possible_pattern in patterns}
     for word in words_list:
-        current_pattern = pattern(guessWord, word)
-        events[current_pattern] += 1
+        try:
+            current_pattern = pattern(guessWord, word)
+            events[current_pattern] += 1
+        except:
+            print (word, end=" - picat \n")
     res = 0
     for possible_pattern in patterns:
         if events[possible_pattern] == 0:
@@ -120,9 +129,7 @@ def entropy(guessWord):
 #corpus = words_list
 #numar de cate ori apare fiecare litera pe fiecare pozitie
 #cand apare A cu galben, caut mai intai cuv in care apare A pe poz cu nr aparitii maxim
-#picked_word = words_list[random.randint(0, dim-1)]
 #print ("Cuvantul care trebuie ghicit este:", picked_word)
-#print (pattern("elegy", "eerie"))
 
 #print (entropy("TAREI"), end="\n")
 #print (entropy("TARIE"), end="\n")
@@ -146,39 +153,45 @@ print (sol_dict)
 '''
 
 picked_word = words_list[random.randint(0, dim-1)]
-#picked_word = "SPRAY"
+#picked_word = "ASTOR"
 print (picked_word)
+
 
 pattern1 = pattern(picked_word, "TARIE")
 filter_words_pattern("TARIE", pattern1)
-
 print ("TARIE", end="\n")
 
 
 sol = "@@@@@"
 
-while pattern(picked_word, sol) != "22222":
+dict1 = {word: 0 for word in words_list}
+dict1["TARIE"] = 1
+
+while pattern(picked_word, sol) != "22222" and len(words_list) > 1:
     maxim = -1
     sol = "@@@@@"
     for word in words_list:
-        val = entropy(word)
-        if val > maxim:
-            maxim = val
-            sol = word
+        if dict1[word] == 0:
+            val = entropy(word)
+            if val > maxim:
+                maxim = val
+                sol = word
     if len(words_list) == 0:
         break
     if len(words_list) == 1:
-        print (words_list[0])
+        #print (words_list[0])
         break
     print(sol)
+    dict1[sol] = 1
     current_pattern = pattern(picked_word, sol)
     filter_words_pattern(sol, current_pattern)
     print(words_list)
     if picked_word not in words_list:
         print("nu mai e")
+if len(words_list) == 1 and sol != words_list[0]:
+    print (words_list[0])
 
-print (sol)
+#print (sol)
 
-#OUALE
-#ETOLE
-#HANTA
+#snaps, hobai, colai, angli - dureaza mult
+#brahe - multe incercari
