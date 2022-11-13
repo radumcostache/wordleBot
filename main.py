@@ -10,6 +10,7 @@ for line in file:
     words_list.append(line)
 words_list.pop()
 words_list.append("ZVONI")
+init_words_list = words_list.copy()
 
 dim = 11454
 
@@ -152,8 +153,7 @@ for word in words_list:
 print (sol_dict)
 '''
 
-picked_word = words_list[random.randint(0, dim-1)]
-#picked_word = "ASTOR"
+picked_word = "VIDAI"#words_list[random.randint(0, dim-1)]
 print (picked_word)
 
 
@@ -164,18 +164,26 @@ print ("TARIE", end="\n")
 
 sol = "@@@@@"
 
-dict1 = {word: 0 for word in words_list}
+dict1 = {word: 0 for word in init_words_list}
 dict1["TARIE"] = 1
 
 while pattern(picked_word, sol) != "22222" and len(words_list) > 1:
     maxim = -1
     sol = "@@@@@"
-    for word in words_list:
-        if dict1[word] == 0:
-            val = entropy(word)
-            if val > maxim:
-                maxim = val
-                sol = word
+    if len(words_list) > 4:
+        for word in init_words_list:
+            if dict1[word] == 0:
+                val = entropy(word)
+                if val > maxim:
+                    maxim = val
+                    sol = word
+    else:
+        for word in words_list:
+            if dict1[word] == 0:
+                val = entropy(word)
+                if val > maxim:
+                    maxim = val
+                    sol = word
     if len(words_list) == 0:
         break
     if len(words_list) == 1:
@@ -193,5 +201,9 @@ if len(words_list) == 1 and sol != words_list[0]:
 
 #print (sol)
 
-#snaps, hobai, colai, angli - dureaza mult
-#brahe - multe incercari
+#snaps, hobai, colai, angli - dureaza mult !!update snaps ok, hobai 6 try-uri, colai merge prost probabil mai trebuie calibrat programul pentru trecerea la entropia totala, angli 5 incercari
+#votul, totul - dureaza mult, sunt multe cuvinte articulate si trebuie gasite literele prin metoda cealalta
+#nopti - dureaza mult pe varianta cu entropie toatala !!update rezolvat dupa calibrare
+#brahe - multe incercari !!update: 5 incercari dupa implementare hibrida
+#vidai - 7 try-uri vs 8 in varianta initiala
+#pare ca atunci cand se duce la pasul 2 pe CALII devine naspa
