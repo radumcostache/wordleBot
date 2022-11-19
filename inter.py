@@ -1,18 +1,16 @@
 import pygame
 import sys
 import random
-from words_list import *
-
 pygame.init()
 
 width = 600
 height = 950
 
 screen = pygame.display.set_mode((width, height))
-background = pygame.image.load("assets/Nume img.png") #aici nu stiu exact cum sa punem patratele pentru ca noi nu avem
+background = pygame.image.load("assets/cristian.jpg") #aici nu stiu exact cum sa punem patratele pentru ca noi nu avem
                                                       #maxim 6 incercari si nu gasesc poza pe google, asa ca ar trebui sa
                                                       #o facem noi
-background_rect = backgroung.get_rect(center=(320,290)) #punem poza in dreptunghi
+background_rect = background.get_rect(center=(318,300)) #punem poza in dreptunghi
 logo = pygame.image.load("assets/logo.png")#stiti pe ce punem in o-ul de la wordle
 
 pygame.display.set_caption("Wordle")
@@ -40,7 +38,7 @@ letterSpacingVert = 12
 letterSize = 75 #astea depind de poza pe care o punem cu patratele pt litere
 
 
-guessesCount = 0
+guesses_count = 0
 
 guesses = [[]] * 9 #nu stiu daca avem mai mult de 9 guess uri pe cuvant sau daca vreti sa avem un numar maxim de guessuri,
                    #dar atfel nu stiu cate casute sa punem
@@ -48,17 +46,16 @@ guesses = [[]] * 9 #nu stiu daca avem mai mult de 9 guess uri pe cuvant sau daca
 current_guess = []
 current_guess_string = ""
 current_letter_bg_x = 110
-
 indicators = []
 
 game_result = ""
 
 class Letter:
-    def initialize(self, text, background_position):
+    def __init__(self, text, background_position):
         self.background_color = "white"
         self.text_color = "black"
-        self.background_position = baclground_position
-        self.backgroud_x = background_position[0]
+        self.background_position = background_position
+        self.background_x = background_position[0]
         self.background_y = background_position[1]
         self.background_rect = (background_position[0], self.background_y, letterSize, letterSize)
         self.text = text
@@ -80,7 +77,7 @@ class Letter:
         pygame.display.update()
 
 class Indicator:
-    def initialize(self, x, y, letter):
+    def __init__(self, x, y, letter):
         self.x = x
         self.y = y
         self.text = letter
