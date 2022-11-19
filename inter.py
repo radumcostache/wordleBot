@@ -5,21 +5,21 @@ from words import *
 pygame.init()
 
 width = 600
-height = 950
+height = 800
 
 screen = pygame.display.set_mode((width, height))
 background = pygame.image.load("assets/cristian.jpg") #aici nu stiu exact cum sa punem patratele pentru ca noi nu avem
                                                       #maxim 6 incercari si nu gasesc poza pe google, asa ca ar trebui sa
                                                       #o facem noi
 background_rect = background.get_rect(center=(318,300)) #punem poza in dreptunghi
-logo = pygame.image.load("assets/logo.png")#stiti pe ce punem in o-ul de la wordle
+logo = pygame.image.load("assets/logo.png")#stiti ce punem in o-ul de la wordle
 
 pygame.display.set_caption("Wordle")
 pygame.display.set_icon(logo)
 
 green = "#178f21"
 yellow = "#bee31b"
-grey = "#6d7a57"
+grey = "#909e80"
 outline = "#d6dbce"
 filled_outline = "#676963"
 
@@ -113,29 +113,29 @@ def check_guess(guess_to_check):
     for i in range(5):
         uppercase_letter = guess_to_check[i].text.upper()
         if uppercase_letter in picked_word:
-            if uppercase_letter == [i]:
-                guess_to_check[i].bg_color = green
+            if uppercase_letter == picked_word[i]:
+                guess_to_check[i].background_color = green
                 for indicator in indicators:
                     if indicator.text == uppercase_letter.upper():
-                        indicator.bg_color = green
+                        indicator.background_color = green
                         indicator.draw()
                 guess_to_check[i].text_color = "white"
                 if not game_decided:
                     game_result = "W"
             else:
-                guess_to_check[i].bg_color = yellow
+                guess_to_check[i].background_color = yellow
                 for indicator in indicators:
                     if indicator.text == uppercase_letter.upper():
-                        indicator.bg_color = yellow
+                        indicator.background_color = yellow
                         indicator.draw()
                 guess_to_check[i].text_color = "white"
                 game_result = ""
                 game_decided = True
         else:
-            guess_to_check[i].bg_color = grey
+            guess_to_check[i].background_color = grey
             for indicator in indicators:
                 if indicator.text == uppercase_letter.upper():
-                    indicator.bg_color = grey
+                    indicator.background_color = grey
                     indicator.draw()
             guess_to_check[i].text_color = "white"
             game_result = ""
@@ -174,7 +174,7 @@ def reset():
     game_result = ""
     pygame.display.update()
     for indicator in indicators:
-        indicator.bg_color = outline
+        indicator.background_color = outline
         indicator.draw()
 
 
