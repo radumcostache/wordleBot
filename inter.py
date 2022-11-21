@@ -23,7 +23,6 @@ grey = "#909e80"
 outline = "#d6dbce"
 filled_outline = "#676963"
 
-alphabet = ("QWERTYUIOP", "ASDFGHJKL", "ZXCVBNM")
 
 picked_word= "MARIA" #aici ar trebui facut sa ia cuvantul din celalalt program
 
@@ -94,18 +93,6 @@ class Indicator:
 
 indicator_x = 20
 indicator_y = 600
-
-for i in range(3):
-    for letter in alphabet[i]:
-        new_indicator = Indicator(indicator_x, indicator_y, letter)
-        indicators.append(new_indicator)
-        new_indicator.draw()
-        indicator_x += 60
-    indicator_y += 100
-    if i == 0:
-        indicator_x = 50
-    if i == 1:
-        indicator_x = 105
 
 def check_guess(guess_to_check):
     global current_guess, current_guess_string, guesses_count, current_letter_bg_x, game_result
