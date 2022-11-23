@@ -93,7 +93,7 @@ class Indicator:
 
 indicator_x = 20
 indicator_y = 600
-
+patternofguess=""
 def check_guess(guess_to_check):
     global current_guess, current_guess_string, guesses_count, current_letter_bg_x, game_result
     game_decided = False
@@ -115,6 +115,7 @@ def check_guess(guess_to_check):
                     if indicator.text == uppercase_letter.upper():
                         indicator.background_color = yellow
                         indicator.draw()
+                        patternofguess.append()
                 guess_to_check[i].text_color = "white"
                 game_result = ""
                 game_decided = True
