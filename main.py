@@ -1,15 +1,8 @@
 import random
 import math
+from words import *
 
-file = open("words_list.txt", 'r')
-
-words_list = []
-for line in file:
-    len1 = len(line)
-    line = line[:len1-1]
-    words_list.append(line)
-words_list.pop()
-words_list.append("ZVONI")
+words_list = WORDS
 init_words_list = words_list.copy()
 
 dim = 11454
@@ -26,11 +19,7 @@ while v[0] == 0:
         v[i] = 0
         i -= 1
     v[i] += 1
-
-file.close()
-
 #functiile pentru joc
-
 def pattern(pickedWord, guessWord):
     res = ['0'] * 5
     for i in range(5):
@@ -50,8 +39,6 @@ def pattern(pickedWord, guessWord):
         else:
             res[i] = '0'
     return "".join(res)
-
-
 #functiile pentru jucator
 
 #def guess():
@@ -205,6 +192,5 @@ if len(words_list) == 1 and sol != words_list[0]:
 #votul, totul - dureaza mult, sunt multe cuvinte articulate si trebuie gasite literele prin metoda cealalta
 #nopti - dureaza mult pe varianta cu entropie toatala !!update rezolvat dupa calibrare
 #brahe - multe incercari !!update: 5 incercari dupa implementare hibrida
-#vidai - 7 try-uri vs 8 in varianta initiala
+#vidai, vatra - 7 try-uri vs 8 in varianta initiala
 #pare ca atunci cand se duce la pasul 2 pe CALII devine naspa
-#VATRA are 8 try-uri
