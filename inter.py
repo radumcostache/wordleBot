@@ -93,15 +93,17 @@ class Indicator:
 
 indicator_x = 20
 indicator_y = 600
-patternofguess=""
+
 def check_guess(guess_to_check):
     global current_guess, current_guess_string, guesses_count, current_letter_bg_x, game_result
+    patternofguess = ""
     game_decided = False
     for i in range(5):
         uppercase_letter = guess_to_check[i].text.upper()
         if uppercase_letter in picked_word:
             if uppercase_letter == picked_word[i]:
                 guess_to_check[i].background_color = green
+                patternofguess += '2'
                 for indicator in indicators:
                     if indicator.text == uppercase_letter.upper():
                         indicator.background_color = green
@@ -111,16 +113,17 @@ def check_guess(guess_to_check):
                     game_result = "W"
             else:
                 guess_to_check[i].background_color = yellow
+                patternofguess += '1'
                 for indicator in indicators:
                     if indicator.text == uppercase_letter.upper():
                         indicator.background_color = yellow
                         indicator.draw()
-                        patternofguess.append()
                 guess_to_check[i].text_color = "white"
                 game_result = ""
                 game_decided = True
         else:
             guess_to_check[i].background_color = grey
+            patternofguess += '0'
             for indicator in indicators:
                 if indicator.text == uppercase_letter.upper():
                     indicator.background_color = grey
@@ -130,7 +133,6 @@ def check_guess(guess_to_check):
             game_decided = True
         guess_to_check[i].draw()
         pygame.display.update()
-
     guesses_count += 1
     current_guess = []
     current_guess_string = ""
@@ -138,7 +140,7 @@ def check_guess(guess_to_check):
 
     if guesses_count == 9 and game_result == "":
         game_result = "L"
-
+    return patternofguess
 def play_again():
     pygame.draw.rect(screen, "white", (10, 600, 1000, 600))
     play_again_font = pygame.font.Font("assets/FreeSansBold.otf", 40)
