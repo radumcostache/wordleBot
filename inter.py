@@ -1,6 +1,7 @@
 import pygame
 import sys
 import random
+from multiprocessing import Process, Queue
 from words import *
 pygame.init()
 
@@ -187,8 +188,51 @@ def delete_letter():
     current_guess.pop()
     current_letter_bg_x -= letterSpacingOriz
 
-while True:
-    if game_result != "":
+def addLetter(newl):
+    global current_guess_string, current_letter_bg_x
+    current_guess_string += newl
+    new_letter = Letter(newl, (current_letter_bg_x, guesses_count * 100 + letterSpacingVert))
+    current_letter_bg_x += letterSpacingOriz
+    guesses[guesses_count].append(new_letter)
+    current_guess.append(new_letter)
+    for guess in guesses:
+        for letter in guess:
+            letter.draw()
+def getWord(guessQueue):
+    while True:
+        if guessQueue.empty() == 0:
+            Word = guessQueue.get()
+            for letter in Word:
+                addLetter(letter)
+            while True:
+                nextWord = 0
+                for event in pygame.event.get() :
+                    if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
+                        check_guess(current_guess)
+                        nextWord = 1
+                        break
+                if nextWord == 1:
+                    break
+def pickRandom(guessQueue):
+    n = 0
+    while True:
+        if guessQueue.empty:
+            guessQueue.put(WORDS[random.randrange(len(WORDS))])
+            n = n + 1
+        if n == 10:
+            break
+
+
+if __name__ == '__main__':
+    guessQueue = Queue()
+    #getWord(guessQueue)
+    process_guessword = Process(target=getWord,args=(guessQueue,))
+    process_randomword = Process(target=pickRandom, args=(guessQueue,))
+    process_guessword.start()
+    process_randomword.start()
+    process_guessword.join()
+    process_randomword.join()
+'''    if game_result != "":
         play_again()
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -208,4 +252,4 @@ while True:
                 key_pressed = event.unicode.upper()
                 if key_pressed in "QWERTYUIOPASDFGHJKLZXCVBNM" and key_pressed != "":
                     if len(current_guess_string) < 5:
-                        create_new_letter()
+                        create_new_letter()'''
