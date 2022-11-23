@@ -153,7 +153,7 @@ for word in words_list:
 print (sol_dict)
 '''
 
-picked_word = "VIDAI"#words_list[random.randint(0, dim-1)]
+picked_word = "VATRA"#words_list[random.randint(0, dim-1)]
 print (picked_word)
 
 
@@ -207,3 +207,4 @@ if len(words_list) == 1 and sol != words_list[0]:
 #brahe - multe incercari !!update: 5 incercari dupa implementare hibrida
 #vidai - 7 try-uri vs 8 in varianta initiala
 #pare ca atunci cand se duce la pasul 2 pe CALII devine naspa
+#VATRA are 8 try-uri
