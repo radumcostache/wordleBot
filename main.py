@@ -1,16 +1,8 @@
-import random
 import math
-from multiprocessing import Process, Pipe
-from time import sleep
+from words import *
 
-file = open("words_list.txt", 'r')
+words_list = WORDS
 
-words_list = []
-for line in file:
-    len1 = len(line)
-    line = line[:len1-1]
-    words_list.append(line)
-words_list.pop()
 words_list.append("ZVONI")
 init_words_list = words_list.copy()
 
@@ -36,85 +28,7 @@ while v[0] == 0:
         i -= 1
     v[i] += 1
 
-file.close()
-
 #functiile pentru joc
-
-'''
-def pattern(pickedWord, guessWord):
-    res = ['0'] * 5
-    for i in range(5):
-        if guessWord[i] == pickedWord[i]:
-            res[i] = '2'
-            pickedWord = pickedWord[:i] + "#" + pickedWord[i+1:]
-            guessWord = guessWord[:i] + "@" + guessWord[i+1:]
-        else:
-            res[i] = '!'
-    for i in range(5):
-        if res[i] == '2':
-            continue
-        ind = pickedWord.find(guessWord[i])
-        if ind != -1:
-            res[i] = '1'
-            pickedWord = pickedWord[:ind] + "#" + pickedWord[ind+1:]
-        else:
-            res[i] = '0'
-    return "".join(res)
-
-
-#functiile pentru jucator
-
-
-def filter_words_pattern(guessWord, givenPattern):
-    aux = []
-    aux.clear()
-    for word in words_list:
-        word1 = (word+'.')[:-1]
-        guessWord1 = (guessWord+'.')[:-1]
-        ok = 0
-        for i in range(5):
-            if givenPattern[i] == "2":
-                if word1[i] != guessWord1[i]:
-                    ok = 1
-                    break
-                #words_list[index], words_list[len(words_list) - 1] = words_list[len(words_list) - 1], words_list[index]
-                #words_list[len(words_list) - 1], words_list[index] = words_list[index], words_list[len(words_list) - 1]
-                #words_list.pop()
-                word1 = word1[:i] + "#" + word1[i+1:]
-                guessWord1 = guessWord1[:i] + "@" + guessWord1[i + 1:]
-        if ok == 1:
-            continue
-        for i in range(5):
-            if givenPattern[i] == "1":
-                if word1.find(guessWord1[i]) == -1:
-                    ok = 1
-                    break
-                else:
-                    ind = word1.find(guessWord1[i])
-                    word1 = word1[:ind] + "#" + word1[ind + 1:]
-                #words_list[index], words_list[len(words_list) - 1] = words_list[len(words_list) - 1], words_list[index]
-                #words_list[len(words_list) - 1], words_list[index] = words_list[index], words_list[len(words_list) - 1]
-                #words_list.pop()
-
-            if givenPattern[i] == "0":
-                if word1.find(guessWord1[i]) != -1:
-                    ok = 1
-                    break
-                #else:
-                    #ind = word1.find(guessWord1[i])
-                    #word1 = word1[:ind] + "#" + word1[ind + 1:]
-                #words_list[index], words_list[len(words_list) - 1] = words_list[len(words_list) - 1], words_list[index]
-                #words_list.pop()
-
-        if ok == 0:
-            #words_list[index], words_list[len(words_list) - 1] = words_list[len(words_list) - 1], words_list[index]
-            #words_list.pop()
-            aux.append(word)
-    words_list.clear()
-    for i in range(len(aux)):
-        words_list.append(aux[i])
-
-'''
 
 def pattern(pickedWord, guessWord):
     res = ['0'] * 5
@@ -181,23 +95,7 @@ def filter_words_pattern(guessWord, givenPattern):
     for i in range(len(aux)):
         words_list.append(aux[i])
 
-'''
-def entropy(guessWord):
-    events = {possible_pattern: 0 for possible_pattern in patterns}
-    for word in words_list:
-        try:
-            current_pattern = pattern(guessWord, word)
-            events[current_pattern] += 1
-        except:
-            print (word, end=" - picat \n")
-    res = 0
-    for possible_pattern in patterns:
-        if events[possible_pattern] == 0:
-            continue
-        prob = events[possible_pattern] / len(words_list)
-        res -= prob * math.log2(prob)
-    return res
-'''
+
 
 #acum trb actualizat freq la fiecare pas
 def entropy(guessWord):

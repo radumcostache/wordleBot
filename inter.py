@@ -1,7 +1,5 @@
 import pygame
-import sys
 import random
-from multiprocessing import Process, Queue
 from words import *
 pygame.init()
 
@@ -25,7 +23,7 @@ outline = "#d6dbce"
 filled_outline = "#676963"
 
 
-picked_word= WORDS[random.randrange(len(WORDS))]
+picked_word= "VASCE" #WORDS[random.randrange(len(WORDS))]
 
 guessed_letter_font = pygame.font.Font("assets/FreeSansBold.otf", 50)
 keyboard_letter_font = pygame.font.Font("assets/FreeSansBold.otf", 25)
@@ -198,41 +196,3 @@ def addLetter(newl):
     for guess in guesses:
         for letter in guess:
             letter.draw()
-def getWord(guessQueue):
-    while True:
-        if guessQueue.empty() == 0:
-            Word = guessQueue.get()
-            for letter in Word:
-                addLetter(letter)
-            while True:
-                nextWord = 0
-                for event in pygame.event.get() :
-                    if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
-                        check_guess(current_guess)
-                        nextWord = 1
-                        break
-                if nextWord == 1:
-                    break
-
-
-'''    if game_result != "":
-        play_again()
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit()
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_RETURN:
-                if game_result != "":
-                    reset()
-                else:
-                    if len(current_guess_string) == 5 and current_guess_string.upper() in WORDS:
-                        check_guess(current_guess)
-            elif event.key == pygame.K_BACKSPACE:
-                if len(current_guess_string) > 0:
-                    delete_letter()
-            else:
-                key_pressed = event.unicode.upper()
-                if key_pressed in "QWERTYUIOPASDFGHJKLZXCVBNM" and key_pressed != "":
-                    if len(current_guess_string) < 5:
-                        create_new_letter()'''
