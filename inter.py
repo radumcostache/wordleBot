@@ -23,7 +23,7 @@ outline = "#d6dbce"
 filled_outline = "#676963"
 
 
-picked_word= "VASCE" #WORDS[random.randrange(len(WORDS))]
+picked_word= WORDS[random.randrange(len(WORDS))]
 
 guessed_letter_font = pygame.font.Font("assets/FreeSansBold.otf", 50)
 keyboard_letter_font = pygame.font.Font("assets/FreeSansBold.otf", 25)
@@ -196,3 +196,20 @@ def addLetter(newl):
     for guess in guesses:
         for letter in guess:
             letter.draw()
+def getWord(guessQueue, patternQueue):
+    print(picked_word)
+    while True:
+        if guessQueue.empty() == 0:
+            Word = guessQueue.get()
+            for letter in Word:
+                addLetter(letter)
+            while True:
+                nextWord = 0
+                for event in pygame.event.get() :
+                    if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
+                        pattern = check_guess(current_guess)
+                        patternQueue.put(pattern)
+                        nextWord = 1
+                        break
+                if nextWord == 1:
+                    break

@@ -2,31 +2,13 @@ import math
 from words import *
 
 words_list = WORDS
-
-words_list.append("ZVONI")
 init_words_list = words_list.copy()
 
 freq = { chr(letter+65): [0]*5 for letter in range(26) }
 for word in words_list:
     for i in range(5):
         freq[word[i]][i] += 1
-
 freq1 = freq.copy()
-
-dim = 11454
-
-patterns = []
-v = [0, 0, 0, 0, 0, 0]
-while v[0] == 0:
-    var = ""
-    for i in range(1, 6):
-        var += str(v[i])
-    patterns.append(var)
-    i = 5
-    while i > 0 and v[i] == 2:
-        v[i] = 0
-        i -= 1
-    v[i] += 1
 
 #functiile pentru joc
 
@@ -108,6 +90,8 @@ def entropy(guessWord):
             if i != j:
                 yellow += freq[letter][j]
         grey = len(words_list) - green - yellow
+        if green == 0 and grey == 0 and yellow == 0:
+            print (guessWord)
         event_green = green / (green + yellow + grey)
         event_yellow = yellow / (green + yellow + grey)
         event_grey = grey / (green + yellow + grey)
@@ -119,12 +103,85 @@ def entropy(guessWord):
             res -= event_grey * math.log2(event_grey)
     return res
 
+def chooseWord(guessQueue, patternQueue):
+#picked_word = "VATRA"#words_list[random.randint(0, dim-1)]
+#print (picked_word)
+    words_list = WORDS
+    init_words_list = words_list.copy()
+    freq = { chr(letter+65): [0]*5 for letter in range(26) }
+    for word in words_list:
+        for i in range(5):
+            freq[word[i]][i] += 1
+
+    freq1 = freq.copy()
+
+    dim = 11454
+
+    patterns = []
+    v = [0, 0, 0, 0, 0, 0]
+    while v[0] == 0:
+        var = ""
+        for i in range(1, 6):
+            var += str(v[i])
+        patterns.append(var)
+        i = 5
+        while i > 0 and v[i] == 2:
+            v[i] = 0
+            i -= 1
+        v[i] += 1
+    guessQueue.put("TAREI")
+    dict1 = {word: 0 for word in init_words_list}
+    dict1["TAREI"] = 1
+    used = [0 for letter in range(26)]
+    sol = "TAREI"
+    while True:
+        if patternQueue.empty() == 0 :
+            maxim = -1
+            nr = 0
+            current_pattern = patternQueue.get()
+            prev_pattern = current_pattern
+            filter_words_pattern(sol, current_pattern)
+            for i in range(5):
+                if prev_pattern[i] == "2":
+                    nr += 1
+                    used[ord(sol[i]) - 65] = 1
+            if nr < 3:
+                for word in init_words_list:
+                    if dict1[word] == 0:
+                        val = entropy(word)
+                        if val > maxim:
+                            maxim = val
+                            sol = word
+            else:
+                for word in init_words_list:
+                    ok = 0
+                    for i in range(5):
+                        if used[ord(word[i]) - 65]:
+                            ok += 1
+                    if ok >= 3:
+                        continue
+                    if dict1[word] == 0:
+                        val = entropy(word)
+                        if val > maxim:
+                            maxim = val
+                            sol = word
+            if len(words_list) == 0:
+                break
+            if len(words_list) == 1:
+                break
+            dict1[sol] = 1
+            guessQueue.put(sol)
+            #print (sol + " " + str(len(words_list)))
+    if len(words_list) == 1:
+        guessQueue.put(words_list[0])
+
+
 #picked_word = words_list[random.randint(0, dim-1)]
 #picked_word = "SUTAI"
 #picked_word = "NAZUL"
 #picked_word = "SOSIT"
 #picked_word = "IUBIM"
-picked_word = "VOTUL"
+#piked_word = "VOTUL"
 
 '''
 LODBA
@@ -134,7 +191,7 @@ GLOSA
 LOBDA
 LODBA
 '''
-print (picked_word)
+#print (picked_word)
 
 #print (entropy("TARIE"))
 #print (entropy("TAREI"))
@@ -161,15 +218,15 @@ print (sol_word)
 
 
 
-pattern1 = pattern(picked_word, "TAREI")
-filter_words_pattern("TAREI", pattern1)
-print ("TAREI", end="\n")
+#pattern1 = pattern(picked_word, "TAREI")
+#filter_words_pattern("TAREI", pattern1)
+#print ("TAREI", end="\n")
 #print (sum(freq["E"]))
 #print(freq["E"])
 #print (len(words_list))
 #print(pattern1)
 
-sol = "@@@@@"
+'''sol = "@@@@@"
 
 dict1 = {word: 0 for word in init_words_list}
 dict1["TAREI"] = 1
@@ -177,7 +234,6 @@ dict1["TAREI"] = 1
 used = [0 for letter in range(26)]
 while pattern(picked_word, sol) != "22222" and len(words_list) > 1:
     maxim = -1
-    '''
     if len(words_list) > 5:
         for word in words_list:
             if dict1[word] == 0:
@@ -193,16 +249,12 @@ while pattern(picked_word, sol) != "22222" and len(words_list) > 1:
                 if val > maxim:
                     maxim = val
                     sol = word
-    '''
-    '''
     #pattern1 = pattern(picked_word, sol)
     sol = "@@@@@"
     #nr = 0
     #for i in range(5):
         #if pattern1[i] == "2":
             #nr += 1
-    '''
-    '''
     if nr < 3:
         for word in words_list:
             if dict1[word] == 0:
@@ -218,9 +270,6 @@ while pattern(picked_word, sol) != "22222" and len(words_list) > 1:
                 if val > maxim:
                     maxim = val
                     sol = word
-    '''
-
-    '''
     for word in words_list:
             if dict1[word] == 0:
                 val = entropy(word)
@@ -229,25 +278,15 @@ while pattern(picked_word, sol) != "22222" and len(words_list) > 1:
                     sol = word
     #lista trb lasata nemodif pentru a gasi cel mai bun cuv
     #pentru lista ramasa de cuv
-    '''
-
-    #if len(words_list) == 1:
-        #break
-    #if len(words_list) == 2:
-        #sol = words_list[0]
-    #else:
-
-    '''
-    for word in init_words_list:
+ for word in init_words_list:
             if dict1[word] == 0:
                 val = entropy(word)
                 if val > maxim:
                     maxim = val
                     sol = word
-    '''
 
 
-    prev_pattern = pattern(picked_word, sol)
+ prev_pattern = pattern(picked_word, sol)
     nr = 0
 
     for i in range(5):
@@ -277,13 +316,13 @@ while pattern(picked_word, sol) != "22222" and len(words_list) > 1:
 
     if len(words_list) <= 1:
         break
-    print(sol)
+    #print(sol)
     dict1[sol] = 1
     current_pattern = pattern(picked_word, sol)
     filter_words_pattern(sol, current_pattern)
 
-if len(words_list) == 1 and sol != words_list[0]:
-    print (words_list[0])
+#if len(words_list) == 1 and sol != words_list[0]:
+    #print (words_list[0])'''
 
 '''
 VOTUL
