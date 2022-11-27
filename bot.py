@@ -134,32 +134,45 @@ def chooseWord(guessQueue, patternQueue):
     dict1["TAREI"] = 1
     used = [0 for letter in range(26)]
     sol = "TAREI"
+    all_pattern = "00000"
     while True:
         if patternQueue.empty() == 0 :
             maxim = -1
             nr = 0
             current_pattern = patternQueue.get()
-            prev_pattern = current_pattern
             filter_words_pattern(sol, current_pattern)
-            for i in range(5):
-                if prev_pattern[i] == "2":
-                    nr += 1
-                    used[ord(sol[i]) - 65] = 1
-            if nr < 3:
-                for word in init_words_list:
-                    if dict1[word] == 0:
-                        val = entropy(word)
-                        if val > maxim:
-                            maxim = val
-                            sol = word
+            guesses = 0
+            if guesses < 6 and len(words_list) > 2:
+                for i in range(5):
+                    if current_pattern[i] == "2":
+                        all_pattern = all_pattern[:i] + "2" + all_pattern[i + 1:]
+                for i in range(5):
+                    if all_pattern[i] == "2":
+                        nr += 1
+                        used[ord(sol[i]) - 65] = 1
+                if nr < 3:
+                    for word in init_words_list:
+                        if dict1[word] == 0:
+                            val = entropy(word)
+                            if val > maxim:
+                                maxim = val
+                                sol = word
+                else:
+                    for word in init_words_list:
+                        ok = 0
+                        for i in range(5):
+                            if used[ord(word[i]) - 65]:
+                                ok += 1
+                        if ok >= 3:
+                            continue
+                        if dict1[word] == 0:
+                            val = entropy(word)
+                            if val > maxim:
+                                maxim = val
+                                sol = word
             else:
-                for word in init_words_list:
+                for word in words_list:
                     ok = 0
-                    for i in range(5):
-                        if used[ord(word[i]) - 65]:
-                            ok += 1
-                    if ok >= 3:
-                        continue
                     if dict1[word] == 0:
                         val = entropy(word)
                         if val > maxim:
@@ -171,7 +184,7 @@ def chooseWord(guessQueue, patternQueue):
                 break
             dict1[sol] = 1
             guessQueue.put(sol)
-            #print (sol + " " + str(len(words_list)))
+            guesses = guesses + 1
     if len(words_list) == 1:
         guessQueue.put(words_list[0])
 
