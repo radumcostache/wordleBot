@@ -23,7 +23,7 @@ outline = "#d6dbce"
 filled_outline = "#676963"
 
 
-picked_word= WORDS[random.randrange(len(WORDS))]
+picked_word = "AFANA" #WORDS[random.randrange(len(WORDS))]
 
 guessed_letter_font = pygame.font.Font("assets/FreeSansBold.otf", 50)
 keyboard_letter_font = pygame.font.Font("assets/FreeSansBold.otf", 25)
