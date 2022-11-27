@@ -12,13 +12,15 @@ Comunicarea dintre bot si interfata a fost realizata cu ajutorul interprocesarii
 ## **Fundamente teoretice**
 
 Entropia reprezinta un concept din teoria informatiei prin care putem exprima cantitatea de incertitudine dintr-un eveniment.
+
 In cazul general, valoarea medie de informatie primita despre o variabila $X$ ce poate lua $N$ valori $x_1$, $x_2$, ..., $x_n$, ale caror probabilitati sunt cunoscute, este:
 
-$H(X)=-\sum_{i=1}^{N} (P(X=x_i)log_2 P(X=x_i))$
+$$H(X)=-\sum_{i=1}^n P(X=x_i) log_2 P(X=x_i)\$$
 
 Acum vom vedea cum putem aplica acest concept in proiectul nostru. Pentru fiecare cuvant incercat, avem $3^5=243$ colorari posibile (avem $3$ culori si $5$ litere) pe care le afiseaza jocul. Dupa fiecare rezultat, raman ca variante posibile doar acele cuvinte care corespund colorarii. Evident, daca toate literele sunt verzi, inseamna ca acesta este cuvantul pe care il cautam.
 
 Pentru fiecare cuvant apare urmatoarea problema: cu cat este mai probabil sa obtinem o anumita colorare, cu atat vor ramane mai multe cuvinte de incercat. De aceea, ne vor interesa cuvintele care creeaza o distribuire uniforma a listei de cuvinte pe colorari. Acest lucru este echivalent, de fapt, cu gasirea cuvantului cu entropie maxima (formula entropiei fiind o medie ponderata).
+
 
 ## **Structura**
 
@@ -40,12 +42,12 @@ Pentru un cuvant dat, ii vom calcula entropia pe litere. Inainte de a incepe sa 
 
 ## **Concluzii**
 
-Simuland jocul pentru toate cuvintele posibile din lista, am obtinut o media de 4,56 incercari pe cuvant. Se poate observa jucand, ca, in practica, bot-ul reuseste sa gaseasca solutia din 4 incercari.
+Simuland jocul pentru toate cuvintele posibile din lista, am obtinut o medie de 4,56 incercari pe cuvant. Se poate observa jucand, ca, in practica, bot-ul reuseste sa gaseasca solutia din 4 incercari.
 
 Comparand cu rezultatele gasite online pentru limba engleza, se observa ca in limba romana sunt necesare, in medie, mai multe incercari.
 
 
-## **Bibliogarfie**
+## **Bibliografie**
 * https://aditya-sengupta.github.io/coding/2022/01/13/wordle.html
 * https://youtu.be/mJ2hPj3kURg
 * https://www.youtube.com/watch?v=v68zYyaEmEA
