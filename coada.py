@@ -1,15 +1,6 @@
 from inter import *
 from main import *
 from multiprocessing import Process, Queue
-def pickRandom(guessQueue, patternQueue):
-    n = 0
-    while True:
-        if guessQueue.empty:
-            guessQueue.put(WORDS[random.randrange(len(WORDS))])
-            n = n + 1
-        if n == 10:
-            break
-
 
 if __name__ == '__main__':
     guessQueue = Queue()
