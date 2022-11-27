@@ -7,7 +7,7 @@ width = 600
 height = 800
 
 screen = pygame.display.set_mode((width, height))
-background = pygame.image.load("assets/black.jpg") #aici nu stiu exact cum sa punem patratele pentru ca noi nu avem
+background = pygame.image.load("assets/white.jpg") #aici nu stiu exact cum sa punem patratele pentru ca noi nu avem
                                                       #maxim 6 incercari si nu gasesc poza pe google, asa ca ar trebui sa
                                                       #o facem noi
 background_rect = background.get_rect(center=(318,300)) #punem poza in dreptunghi
