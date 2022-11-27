@@ -15,14 +15,12 @@ Entropia reprezinta un concept din teoria informatiei prin care putem exprima ca
 
 In cazul general, valoarea medie de informatie primita despre o variabila $X$ ce poate lua $N$ valori $x_1$, $x_2$, ..., $x_n$, ale caror probabilitati sunt cunoscute, este:
 
-$H(X)=-\sum_{i=1}^{N} (P(X=x_i)log_2 P(X=x_i))$
+$$\-\sum_{i=1}^n P(X=x_i) log_2 P(X=x_i)\$$
 
 Acum vom vedea cum putem aplica acest concept in proiectul nostru. Pentru fiecare cuvant incercat, avem $3^5=243$ colorari posibile (avem $3$ culori si $5$ litere) pe care le afiseaza jocul. Dupa fiecare rezultat, raman ca variante posibile doar acele cuvinte care corespund colorarii. Evident, daca toate literele sunt verzi, inseamna ca acesta este cuvantul pe care il cautam.
 
 Pentru fiecare cuvant apare urmatoarea problema: cu cat este mai probabil sa obtinem o anumita colorare, cu atat vor ramane mai multe cuvinte de incercat. De aceea, ne vor interesa cuvintele care creeaza o distribuire uniforma a listei de cuvinte pe colorari. Acest lucru este echivalent, de fapt, cu gasirea cuvantului cu entropie maxima (formula entropiei fiind o medie ponderata).
 
-In cazul general, valoarea medie de informatie primita despre o variabila X ce poate lua n valori x1, x2,..., xn, ale caror probabilitati sunt cunoscute, este:
-$$\-\sum_{i=1}^n P(X=x_i) log_2 P(X=x_i)\$$
 Acum vom vedea cum putem aplica acest concept in proiectul nostru. Pentru fiecare cuvant incercat, avem $3^5=243$ colorari posibile (avem trei culori si 5 litere) pe care le afiseaza jocul. Dupa fiecare rezultat, raman ca variante posibile doar acele cuvinte care corespund colorarii. Evident, daca toate literele sunt verzi, inseamna ca acesta este cuvantul pe care il cautam.
 Pentru fiecare cuvant apare urmatoarea problema: cu cat este mai probabil sa obtinem o anumita colorare, cu atat vor ramane mai multe cuvinte de incercat. De aceea, ne vor interesa cuvintele care creeaza o distributie uniforma a liste de cuvinte pe colorari. Acest lucru este echivalent, de fapt, cu gasirea cuvantului cu entropie maxima (Formula entropiei fiind o medie ponderata).
 
