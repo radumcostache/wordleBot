@@ -224,11 +224,12 @@ def entropy(guessWord):
     return res
 
 outfile = open("tries.txt", 'w')
-tries = 1
+tries = 0
 #print(len(words_list))
+wordindex = 0
 for picked_word in init_words_list:
     outfile.write(picked_word + ", ")
-
+    tries += 1
     freq = copy.deepcopy(init_freq)
     freq1 = copy.deepcopy(init_freq)
     words_list = init_words_list.copy()
@@ -238,50 +239,71 @@ for picked_word in init_words_list:
     sol = "@@@@@"
     dict1 = {word: 0 for word in init_words_list}
     dict1["TAREI"] = 1
-
+    all_pattern = "00000"
     used = [0 for letter in range(26)]
+    linie = ""
+    wordindex += 1
+    print(wordindex)
+    kk = 0
     while pattern(picked_word, sol) != "22222" and len(words_list) > 1:
-        maxim = -1
-        prev_pattern = pattern(picked_word, sol)
+        maxim = -1000000
+        if picked_word == "AFANA":
+            kk = 1
         nr = 0
-
-        for i in range(5):
-            if prev_pattern[i] == "2":
-                nr += 1
-                used[ord(sol[i])-65] = 1
-        if nr < 3:
-            for word in init_words_list:
-                if dict1[word] == 0:
-                    val = entropy(word)
-                    if val > maxim:
-                        maxim = val
-                        sol = word
-        else:
-            for word in init_words_list:
-                ok = 0
-                for i in range(5):
-                    if used[ord(word[i])-65]:
-                        ok += 1
-                if ok >= 3:
-                    continue
-                if dict1[word] == 0:
-                    val = entropy(word)
-                    if val > maxim:
-                        maxim = val
-                        sol = word
-
-        if len(words_list) <= 1:
-            break
-        outfile.write(sol + ", ")
-        tries = tries + 1
-        dict1[sol] = 1
         current_pattern = pattern(picked_word, sol)
         filter_words_pattern(sol, current_pattern)
-
-    if len(words_list) == 1 and sol != words_list[0]:
-        outfile.write(words_list[0])
-        tries = tries + 1.0
-    outfile.write("\n")
+        guesses = 0
+        if guesses < 6 and len(words_list) > 2:
+            for i in range(5):
+                if current_pattern[i] == "2":
+                    all_pattern = all_pattern[:i] + "2" + all_pattern[i + 1:]
+            for i in range(5):
+                if all_pattern[i] == "2":
+                    nr += 1
+                    used[ord(sol[i]) - 65] = 1
+            if nr < 3:
+                for word in init_words_list:
+                    if dict1[word] == 0:
+                        val = entropy(word)
+                        if val > maxim:
+                            maxim = val
+                            sol = word
+            else:
+                for word in init_words_list:
+                    ok = 0
+                    for i in range(5):
+                        if used[ord(word[i]) - 65]:
+                            ok += 1
+                    if ok >= 3:
+                        continue
+                    if dict1[word] == 0:
+                        val = entropy(word)
+                        if val > maxim:
+                            maxim = val
+                            sol = word
+        else:
+            for word in words_list:
+                ok = 0
+                if dict1[word] == 0:
+                    val = entropy(word)
+                    if val > maxim:
+                        maxim = val
+                        sol = word
+        if len(words_list) == 0:
+            break
+        if len(words_list) == 1:
+            break
+        dict1[sol] = 1
+        linie += sol + ", "
+        tries += 1
+#        outfile.write(sol + ", ")
+        guesses = guesses + 1.0
+    if len(words_list) == 1:
+        linie += words_list[0]
+        tries = tries + 1
+    linie = linie.strip(' ')
+    linie = linie.strip(',')
+    outfile.write(linie + "\n")
 print(tries/11454.0)
 outfile.close()
 
