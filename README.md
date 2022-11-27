@@ -21,9 +21,6 @@ Acum vom vedea cum putem aplica acest concept in proiectul nostru. Pentru fiecar
 
 Pentru fiecare cuvant apare urmatoarea problema: cu cat este mai probabil sa obtinem o anumita colorare, cu atat vor ramane mai multe cuvinte de incercat. De aceea, ne vor interesa cuvintele care creeaza o distribuire uniforma a listei de cuvinte pe colorari. Acest lucru este echivalent, de fapt, cu gasirea cuvantului cu entropie maxima (formula entropiei fiind o medie ponderata).
 
-Acum vom vedea cum putem aplica acest concept in proiectul nostru. Pentru fiecare cuvant incercat, avem $3^5=243$ colorari posibile (avem trei culori si 5 litere) pe care le afiseaza jocul. Dupa fiecare rezultat, raman ca variante posibile doar acele cuvinte care corespund colorarii. Evident, daca toate literele sunt verzi, inseamna ca acesta este cuvantul pe care il cautam.
-Pentru fiecare cuvant apare urmatoarea problema: cu cat este mai probabil sa obtinem o anumita colorare, cu atat vor ramane mai multe cuvinte de incercat. De aceea, ne vor interesa cuvintele care creeaza o distributie uniforma a liste de cuvinte pe colorari. Acest lucru este echivalent, de fapt, cu gasirea cuvantului cu entropie maxima (Formula entropiei fiind o medie ponderata).
-
 
 ## **Structura**
 
