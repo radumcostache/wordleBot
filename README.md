@@ -32,6 +32,8 @@ Proiectul contine patru fisiere cu extensia .py:
 
 ## **Implementarea programului**
 
+Mai intai, avem nevoie sa descarcam biblioteca pygame.
+
 Vom incepe prin a rula fisierul main.py, unde am realizat interprocesarea dintre bot si GUI. Cele doua procese comunica prin intermediul a doua cozi, una pentru cuvintele de testat si una pentru rezultatele verificarii dupa regulile jocului Wordle.
 
 Fisierul inter.py alege, la intamplare, un cuvant din lista. Acum, bot.py trebuie sa inceapa sa trimita cuvintele de incercat. La fiecare pas, interfata va verifica acel cuvant si va returna un string de 5 caractere, avand codificarea: 0-gri, 1-galben si 2-verde.
